@@ -281,6 +281,15 @@ if [ $? -gt 0 ]; then
     rmFile "${tmpFile}"
     return 1
 fi
+
+(git config -f /tmp/config.txt user.email "${3}" && \
+ git config -f /tmp/config.txt user.name  "${2}") > "${tmpFile}" 2>&1
+if [ $? -gt 0 ]; then
+    cat "${tmpFile}"
+    rmFile "${tmpFile}"
+    return 1
+fi
+
 export GIT_AUTHOR_NAME="${2}"
 export GIT_AUTHOR_EMAIL="${3}"
 (git commit --author="${2}" -am "${5}") > "${tmpFile}" 2>&1
