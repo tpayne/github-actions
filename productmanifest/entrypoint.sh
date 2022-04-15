@@ -100,16 +100,22 @@ if [ "x${gitToken}" = "x" -a "x${API_GIT_TOKEN}" != "x" ]; then
 fi
 
 if [ "x${gitToken}" = "x" ]; then
+    echo "${command}: - Error: GitHub token is missing"
     show_usage
 elif [ "x${manifestFile}" = "x" ]; then
-    show_usage    
+    echo "${command}: - Error: Manifest file is missing"
+    show_usage   
 elif [ "x${manifestGitRepo}" = "x" ]; then
+    echo "${command}: - Error: GitOps repo is missing"
     show_usage    
 elif [ "x${dockerList}" = "x" ]; then
+    echo "${command}: - Error: Docker image list is missing"
     show_usage    
 elif [ "x${gitUser}" = "x" ]; then
+    echo "${command}: - Error: GitHub user is missing"
     show_usage    
 elif [ "x${gitEmail}" = "x" ]; then
+    echo "${command}: - Error: GitHub email is missing"
     show_usage    
 elif [ "x${gitComment}" = "x" ]; then
     gitComment="Updating product manifest `date`"    
@@ -314,7 +320,7 @@ if [ $clone -gt 0 ]; then
     cloneRepo "${manifestGitRepo}"
     if [ $? -ne 0 ]; then
         cd $CWD
-        echo "${command}: - Error: Cloning repo fauled"
+        echo "${command}: - Error: Cloning repo failed"
         exit 1
     fi
 fi    
