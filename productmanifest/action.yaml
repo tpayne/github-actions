@@ -42,7 +42,11 @@ inputs:
   docker-passwd:
     description: Docker password to use for the login
     required: true
-        
+  debug:
+    description: '[Optional] Debug action'
+    default: '--debug'
+    required: false
+    
 runs:
   using: docker
   image: Dockerfile
@@ -69,6 +73,7 @@ runs:
     - '${{ inputs.docker-passwd }}'
     - -p 
     - -c
+    - '${{ inputs.debug }}'
 branding:
   icon: git-commit
   color: green
