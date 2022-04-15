@@ -2,7 +2,7 @@
 
 This GitHub action is intended to be used with ArgoCD and Helm charts to help faciliate an easier GitOps experience.
 
-This repo will be updated with examples etc., when I get some time.
+This GitHub action does require some additional work, so watch this space.
 
 ## Inputs
 ### `gitops-repo-url` (argument) (mandatory)
