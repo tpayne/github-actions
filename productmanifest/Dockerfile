@@ -15,8 +15,6 @@ RUN addgroup -S ${account} \
     && adduser -S ${account} -G ${account}
 USER ${account}:${account}
 
-WORKDIR /work
+COPY entrypoint.sh ./entrypoint.sh
 
-COPY productmanifest.sh ./entrypoint.sh
-
-ENTRYPOINT ["/work/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
