@@ -51,6 +51,8 @@ runs:
   using: docker
   image: Dockerfile
   args:
+    - -gt 
+    - '${{ inputs.git-token }}'
     - -mgr 
     - '${{ inputs.gitops-repo-url }}'
     - -mf 
@@ -63,8 +65,6 @@ runs:
     - '${{ inputs.image-list }}'
     - -m 
     - '${{ inputs.commit-message }}'
-    - -gt 
-    - '${{ inputs.git-token }}'
     - -dr 
     - '${{ inputs.registry-server }}'
     - -du 
