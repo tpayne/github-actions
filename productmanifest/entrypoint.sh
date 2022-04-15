@@ -272,6 +272,7 @@ getGitDir "${1}"
 cd /tmp/${gitFolder}
 pwd
 echo "${command}: Committing product manifests..."
+GIT_DIR=/tmp/
 (git config user.name "${2}" && git config --global user.email "${3}") \
     > "${tmpFile}" 2>&1
 if [ $? -gt 0 ]; then
