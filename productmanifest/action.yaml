@@ -44,7 +44,6 @@ inputs:
     required: true
   debug:
     description: '[Optional] Debug action'
-    default: '--debug'
     required: false
     
 runs:
