@@ -51,7 +51,7 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - -gt 
+    - --git-token 
     - '${{ inputs.git-token }}'
     - -mgr 
     - '${{ inputs.gitops-repo-url }}'
