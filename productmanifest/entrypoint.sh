@@ -273,13 +273,6 @@ cd /tmp/${gitFolder}
 pwd
 echo "${command}: Committing product manifests..."
 GIT_DIR=/tmp/
-(git config user.name "${2}" && git config --global user.email "${3}") \
-    > "${tmpFile}" 2>&1
-if [ $? -gt 0 ]; then
-    cat "${tmpFile}"
-    rmFile "${tmpFile}"
-    return 1
-fi
 
 url=$(printf ${1} | sed "s/https:\/\//https:\/\/token:${4}@/g")
 (git remote set-url origin ${url}) > "${tmpFile}" 2>&1
@@ -288,7 +281,9 @@ if [ $? -gt 0 ]; then
     rmFile "${tmpFile}"
     return 1
 fi
-(git commit -am "${5}") > "${tmpFile}" 2>&1
+export GIT_AUTHOR_NAME="${2}"
+export GIT_AUTHOR_EMAIL="${3}"
+(git commit --author="${2}" -am "${5}") > "${tmpFile}" 2>&1
 if [ $? -gt 0 ]; then
     cat "${tmpFile}"
     rmFile "${tmpFile}"
