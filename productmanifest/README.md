@@ -1,12 +1,17 @@
-# Product Manifest
-
+Product Manifest
+----------------
 This GitHub action is intended to be used with ArgoCD and Helm charts to help faciliate an easier GitOps experience.
 
 This GitHub action does require some additional work, so watch this space.
 
+Build Status
+------------
 [![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml)
 
-## Inputs
+Documented Parameters
+---------------------
+The following are the documented parameters for this action...
+
 ### `gitops-repo-url` (argument) (mandatory)
 The URL of the GitOps repo to clone and update
 
@@ -41,36 +46,41 @@ Docker username to login as
 ### `docker-passwd` (argument) (mandatory)
 Docker password to use for the login
 
-## Example usage
+Example usage
+-------------
+The following are some samples of usage.
+   
 ```yaml
-         - name: GitOps Helm Update
-           uses: tpayne/github-actions/productmanifest
-           env:
-            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-           with:
-            gitops-repo-url: https://github.com/tpayne/kubernetes-examples
-            manifest-file: YAML/Argocd/helm/dev/values.yaml
-            github-username: ${{ secrets.GIT_USER }}
-            github-email: ${{ secrets.GIT_EMAIL }}
-            image-list: wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0 
-            git-token: ${{ secrets.API_TOKEN_GITHUB }}
-            registry-server: docker.io
-            docker-username: ${{ secrets.DOCKER_USER }}
-            docker-passwd: ${{ secrets.DOCKER_PWD }}
-
-         - name: GitOps Helm Chart Update(s)
-           uses: tpayne/github-actions/productmanifest@main
-           env:
-            API_TOKEN_GITHUB: ${{ secrets.XGITHUB_PAT }}
-           with:
-            gitops-repo-url: https://github.com/tpayne/codefresh-csdp-samples
-            manifest-file: helm/dev/values.yaml
-            github-username: ${{ secrets.XGITHUB_USER }}
-            github-email: ${{ secrets.XGITHUB_EMAIL }}
-            image-list: jenkinscd-framework-deployment:tpayne666/jenkinsdsl:latest
-            git-token: ${{ secrets.XGITHUB_PAT }}
-            registry-server: docker.io
-            docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
-            docker-passwd: ${{ secrets.DOCKERHUB_PASSWORD }}
-
+   - name: GitOps Helm Update
+     uses: tpayne/github-actions/productmanifest
+     env:
+      API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+     with:
+      gitops-repo-url: https://github.com/tpayne/kubernetes-examples
+      manifest-file: YAML/Argocd/helm/dev/values.yaml
+      github-username: ${{ secrets.GIT_USER }}
+      github-email: ${{ secrets.GIT_EMAIL }}
+      image-list: wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0 
+      git-token: ${{ secrets.API_TOKEN_GITHUB }}
+      registry-server: docker.io
+      docker-username: ${{ secrets.DOCKER_USER }}
+      docker-passwd: ${{ secrets.DOCKER_PWD }}
 ```
+
+```yaml
+   - name: GitOps Helm Chart Update(s)
+     uses: tpayne/github-actions/productmanifest@main
+     env:
+      API_TOKEN_GITHUB: ${{ secrets.XGITHUB_PAT }}
+     with:
+      gitops-repo-url: https://github.com/tpayne/codefresh-csdp-samples
+      manifest-file: helm/dev/values.yaml
+      github-username: ${{ secrets.XGITHUB_USER }}
+      github-email: ${{ secrets.XGITHUB_EMAIL }}
+      image-list: jenkinscd-framework-deployment:tpayne666/jenkinsdsl:latest
+      git-token: ${{ secrets.XGITHUB_PAT }}
+      registry-server: docker.io
+      docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      docker-passwd: ${{ secrets.DOCKERHUB_PASSWORD }}
+```
+
