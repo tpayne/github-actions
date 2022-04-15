@@ -25,7 +25,7 @@ jobs:
     - name: Build the Helm GitOps image...
       run: |
         (cd productmanifest && \
-        docker build . --file Dockerfile helmgitops:latest && \
+        docker build . --file Dockerfile -t helmgitops:latest && \
         docker rmi -f helmgitops:latest)
 
 # End of job
