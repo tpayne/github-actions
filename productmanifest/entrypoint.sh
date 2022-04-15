@@ -80,11 +80,11 @@ while [ $# -ne 0 ] ; do
                  shift 2;;
              -ge | --git-email) gitEmail=$2
                  shift 2;;
+             -gt | --git-token) gitToken=$2
+                 shift 2;;
              -m | --message) gitComment=$2
                  shift 2;;
              -d | --delete) remove=1 ; shift;;
-             -gt | --git-token) gitToken=$2
-                 shift 2;;
              --debug) set -xv ; shift;;
              -p | --push) push=1 ; shift;;
              -c | --clone) clone=1 ; shift;;
@@ -94,10 +94,6 @@ while [ $# -ne 0 ] ; do
              -|*) break;;
         esac
 done
-
-if [ "x${gitToken}" = "x" -a "x${API_GIT_TOKEN}" != "x" ]; then
-    gitToken="${API_GIT_TOKEN}"
-fi
 
 if [ "x${manifestFile}" = "x" ]; then
     echo "${command}: - Error: Manifest file is missing"
