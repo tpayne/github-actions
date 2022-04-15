@@ -51,6 +51,8 @@ runs:
   using: docker
   image: Dockerfile
   args:
+    - --clone
+    - --push
     - --git-token 
     - '${{ inputs.git-token }}'
     - -mgr 
@@ -71,8 +73,6 @@ runs:
     - '${{ inputs.docker-username }}'
     - -dp
     - '${{ inputs.docker-passwd }}'
-    - -p 
-    - -c
     - '${{ inputs.debug }}'
 branding:
   icon: git-commit

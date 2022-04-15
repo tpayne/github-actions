@@ -95,6 +95,8 @@ while [ $# -ne 0 ] ; do
         esac
 done
 
+echo "Token = ${gitToken} ${manifestGitRepo}"
+
 if [ "x${manifestFile}" = "x" ]; then
     echo "${command}: - Error: Manifest file is missing"
     show_usage   
