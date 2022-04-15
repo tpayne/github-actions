@@ -1,0 +1,22 @@
+on: [push]
+ 
+jobs:
+   custom_test:
+     runs-on: ubuntu-latest
+     name: Test action locally 
+     steps:
+       - name: Helm Push 
+         uses: ./ # Uses an action in the root directory
+         id: productmanifest
+         env:
+           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+         with:
+           gitops-repo-url: https://github.com/tpayne/kubernetes-examples
+           manifest-file: YAML/Argocd/helm/dev/values.yaml
+           github-username: username
+           github-email: emailadd
+           image-list: wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0 
+           git-token: ${{ secrets.API_TOKEN_GITHUB }}
+           registry-server: docker.io
+           docker-username: username
+           docker-passwd: passwd
