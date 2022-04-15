@@ -99,10 +99,7 @@ if [ "x${gitToken}" = "x" -a "x${API_GIT_TOKEN}" != "x" ]; then
     gitToken="${API_GIT_TOKEN}"
 fi
 
-if [ "x${gitToken}" = "x" ]; then
-    echo "${command}: - Error: GitHub token is missing"
-    show_usage
-elif [ "x${manifestFile}" = "x" ]; then
+if [ "x${manifestFile}" = "x" ]; then
     echo "${command}: - Error: Manifest file is missing"
     show_usage   
 elif [ "x${manifestGitRepo}" = "x" ]; then
@@ -117,6 +114,9 @@ elif [ "x${gitUser}" = "x" ]; then
 elif [ "x${gitEmail}" = "x" ]; then
     echo "${command}: - Error: GitHub email is missing"
     show_usage    
+elif [ "x${gitToken}" = "x" ]; then
+    echo "${command}: - Error: GitHub token is missing"
+    show_usage
 elif [ "x${gitComment}" = "x" ]; then
     gitComment="Updating product manifest `date`"    
 fi
