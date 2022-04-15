@@ -13,6 +13,8 @@ RUN (curl -SL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
 ARG account=git
 RUN addgroup -S ${account} \
     && adduser -S ${account} -G ${account}
+RUN mkdir /github/
+RUN mkdir /github/home/
 RUN chown -R ${account} /github/home/
 RUN chmod -R o+rw /github/home/
 
