@@ -270,7 +270,6 @@ commitManifest()
 getGitDir "${1}"
 
 cd /tmp/${gitFolder}
-pwd
 echo "${command}: Committing product manifests..."
 
 url=$(printf ${1} | sed "s/https:\/\//https:\/\/token:${4}@/g")
