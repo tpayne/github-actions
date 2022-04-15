@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Helm GitOps image...
       run: |
-        (cd github-actions/productmanifest && \
+        (cd productmanifest && \
         docker build . --file Dockerfile helmgitops:latest && \
         docker rmi -f helmgitops:latest)
 
