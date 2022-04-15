@@ -61,38 +61,40 @@ usage()
 #
 
 while [ $# -ne 0 ] ; do
-        case $1 in
-             -du | --docker-user) userName=$2
-                 shift 2;;
-             -dp | --docker-password) passwd=$2
-                 shift 2;;
-             -dr | --registery-server) registryServer=$2
-                 shift 2;;                 
-             -mf | --manifest-file) manifestFile=$2
-                 shift 2;;
-             -mgr | --manifest-git-repo) manifestGitRepo=$2
-                 shift 2;;
-             -td | --target-dir) targetDir=$2
-                 shift 2;;
-             -dl | --docker-list) dockerList=$2
-                 shift 2;;
-             -gu | --git-user) gitUser=$2
-                 shift 2;;
-             -ge | --git-email) gitEmail=$2
-                 shift 2;;
-             -gt | --git-token) gitToken=$2
-                 shift 2;;
-             -m | --message) gitComment=$2
-                 shift 2;;
-             -d | --delete) remove=1 ; shift;;
-             --debug) set -xv ; shift;;
-             -p | --push) push=1 ; shift;;
-             -c | --clone) clone=1 ; shift;;
-             -d | --delete) remove=1 ; shift;;
-             -?*) show_usage ; break;;
-             --) shift ; break;;
-             -|*) break;;
-        esac
+    # GitHub actions double quote where we do not want them...
+    word="`echo "$1" | sed -e 's/^"//' -e 's/"$//'`"
+    case $word in
+         -du | --docker-user) userName=$2
+             shift 2;;
+         -dp | --docker-password) passwd=$2
+             shift 2;;
+         -dr | --registery-server) registryServer=$2
+             shift 2;;                 
+         -mf | --manifest-file) manifestFile=$2
+             shift 2;;
+         -mgr | --manifest-git-repo) manifestGitRepo=$2
+             shift 2;;
+         -td | --target-dir) targetDir=$2
+             shift 2;;
+         -dl | --docker-list) dockerList=$2
+             shift 2;;
+         -gu | --git-user) gitUser=$2
+             shift 2;;
+         -ge | --git-email) gitEmail=$2
+             shift 2;;
+         -gt | --git-token) gitToken=$2
+             shift 2;;
+         -m | --message) gitComment=$2
+             shift 2;;
+         -d | --delete) remove=1 ; shift;;
+         --debug) set -xv ; shift;;
+         -p | --push) push=1 ; shift;;
+         -c | --clone) clone=1 ; shift;;
+         -d | --delete) remove=1 ; shift;;
+         -?*) show_usage ; break;;
+         --) shift ; break;;
+         -|*) break;;
+    esac
 done
 
 echo "Token = ${gitToken} ${manifestGitRepo}"
