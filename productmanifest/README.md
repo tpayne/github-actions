@@ -4,6 +4,8 @@ This GitHub action is intended to be used with ArgoCD and Helm charts to help fa
 
 This GitHub action does require some additional work, so watch this space.
 
+[![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml)
+
 ## Inputs
 ### `gitops-repo-url` (argument) (mandatory)
 The URL of the GitOps repo to clone and update
