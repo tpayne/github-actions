@@ -39,14 +39,21 @@ Docker username to login as
 ### `docker-passwd` (argument) (mandatory)
 Docker password to use for the login
 
-TBD
-
 ## Example usage
 ```yaml
       - name: GitOps Helm Update
-        uses: XX
+        uses: tpayne/github-actions/productmanifest
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          XXX
+          gitops-repo-url: https://github.com/tpayne/kubernetes-examples
+          manifest-file: YAML/Argocd/helm/dev/values.yaml
+          github-username: ${{ secrets.GIT_USER }}
+          github-email: ${{ secrets.GIT_EMAIL }}
+          image-list: wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0 
+          git-token: ${{ secrets.API_TOKEN_GITHUB }}
+          registry-server: docker.io
+          docker-username: ${{ secrets.DOCKER_USER }}
+          docker-passwd: ${{ secrets.DOCKER_PWD }}
+
 ```
