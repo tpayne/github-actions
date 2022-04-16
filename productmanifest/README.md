@@ -68,3 +68,6 @@ Notes
 - This GitHub action has only been tested against `docker.io` using public repos. Additional support may need to be added for other repo types. This can be done best by using their REST API as `docker` is flakey 
 - Currently, this action uses Docker REST APIs rather than docker itself for the work. This is because it is generally quicker, but not so portable. If portability becomes an issue, I will make this addon work as a `dnd` system
 
+References
+----------
+- https://hub.docker.com/_/docker/?tab=tags (DnD)
