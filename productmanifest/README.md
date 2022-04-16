@@ -2,7 +2,7 @@ Product Manifest
 ----------------
 This GitHub action is intended to be used with ArgoCD and Helm charts to help faciliate an easier GitOps experience.
 
-This GitHub action does require some additional work, so watch this space.
+This GitHub action does require some additional work as I start to use it in anger, so watch this space.
 
 Build Status
 ------------
