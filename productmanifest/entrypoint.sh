@@ -141,12 +141,14 @@ exit 1
 testDocker()
 {
 echo "${command}: Test login..."
-
-(docker login https://index.${1}/v1/ -u ${2} -p ${3}) > /dev/null 2>&1
+rmFile "${tmpFile}"
+(docker login https://index.${1}/v1/ -u ${2} -p ${3}) "${tmpFile}" 2>&1
 if [ $? -gt 0 ]; then
-  return 1
+    cat "${tmpFile}"
+    rmFile "${tmpFile}"
+    return 1
 fi
-
+rmFile "${tmpFile}"
 return 0
 }
 
