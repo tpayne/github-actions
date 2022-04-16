@@ -72,3 +72,5 @@ References
 ----------
 - https://hub.docker.com/_/docker/?tab=tags (DnD)
 - https://docs.github.com/en/rest/reference/packages
+- https://docs.docker.com/registry/spec/api/#listing-repositories
+- https://github.community/t/ghcr-io-docker-http-api/130121
