@@ -12,36 +12,18 @@ Documented Parameters
 ---------------------
 The following are the documented parameters for this action...
 
-### `gitops-repo-url` (argument) (mandatory)
-The URL of the GitOps repo to clone and update
 
-### `manifest-file` (argument) (mandatory)
-The relative location of the Helm Values chart to update
-
-### `github-username` (argument) (mandatory)
-Name of the destination username/organization
-
-### `github-email` (argument) (mandatory)
-Name of the destination username/organization email
-
-### `image-list` (argument) (mandatory)
-Image list to process. This is a CSV and takes the form of a string like...
-   <helmChartName>:<dockerImage>
-
-For example...
-   wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0   
-
-### `git-token` (argument) (mandatory)
-Value of the Git Token to use for the commit - usually a GITHUB PAT 
-
-### `registry-server` (argument) (mandatory)
-Docker registry server where images are held
-  
-### `docker-username` (argument) (mandatory)
-Docker username to login as
-
-### `docker-passwd` (argument) (mandatory)
-Docker password to use for the login
+>| Argument | Description | Mandatory |
+>| -------- | ----------- | --------- | 
+>| `gitops-repo-url` | The URL of the GitOps repo to clone and update | True |
+>| `manifest-file` | The relative location of the Helm Values chart to update | True |
+>| `github-username` | Name of the destination username/organization | True |
+>| `github-email` | Name of the destination username/organization email | True |
+>| `image-list` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage) | True |
+>| `git-token` | Value of the Git Token to use for the commit - usually a GITHUB PAT | True |
+>| `registry-server` | Docker registry server where images are held | True |
+>| `docker-username` | Docker username to login as | True |
+>| `docker-passwd` | Docker password to use for the login | True |
 
 Example usage
 -------------
