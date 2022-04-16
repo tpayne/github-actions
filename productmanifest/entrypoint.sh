@@ -140,16 +140,17 @@ exit 1
 
 testDocker()
 {
+# Logins can be flakey - they work sometimes and other times not...
 echo "${command}: Test login..."
 rmFile "${tmpFile}"
 (docker login ${1}/ -u ${2} -p ${3}) > "${tmpFile}" 2>&1
 if [ $? -gt 0 ]; then
     if [ "${1}" = "docker.io" ]; then
-        echo "${command}: -- Test JWT login..."
+        echo "${command}: - Test JWT login..."
         jwtToken=$(curl -s -H "Content-Type: application/json" \
             -X POST -d '{"username": "'${2}'", "password": "'${3}'"}' \
             https://hub.docker.com/v2/users/login/ | jq -r .token)
-        if [ "x${jwtToken}" = "x" ]; then
+        if [ "x${jwtToken}" = "xnull" ]; then
             cat "${tmpFile}"
             rmFile "${tmpFile}"
             return 1
