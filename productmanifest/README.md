@@ -81,3 +81,7 @@ The following are some samples of usage.
       docker-passwd: ${{ secrets.DOCKERHUB_PASSWORD }}
 ```
 
+Notes
+-----
+- This GitHub action has only been tested against `docker.io` using public repos. Additional support may need to be added for other repo types. This can be done best by using their REST API as `docker` is flakey 
+
