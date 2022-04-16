@@ -31,9 +31,6 @@ Image list to process. This is a CSV and takes the form of a string like...
 For example...
    wscs-deployment:tpayne666/nodejs:master,wsnodejs-b-deployment:tpayne666/nodejs:1.0   
 
-### `commit-message` (argument) (optional)
-Commit message for Git
-
 ### `git-token` (argument) (mandatory)
 Value of the Git Token to use for the commit - usually a GITHUB PAT 
 
