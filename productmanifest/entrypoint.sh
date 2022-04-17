@@ -100,7 +100,7 @@ while [ $# -ne 0 ] ; do
     esac
 done
 
-if [ "x${dockerFileList}" != "x" ]; then
+if [ "x${dockerFileList}" != "x" -a "x${dockerFileList}" != "xnull" ]; then
     chkFile "${dockerFileList}"
     if [ $? -ne 0 ]; then
         echo "${command}: - Error: Docker list file does not exist"
