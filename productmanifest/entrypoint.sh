@@ -220,10 +220,15 @@ return 0
 
 getDockerToken()
 {
+dockerToken=
 dockerToken=$(curl --silent \
                 "https://auth.${1}/token?scope=repository:${2}:pull&service=registry.${1}" \
                 | jq -r '.token')
-return $?
+
+if [ "x${dockerToken}" = "x" ]; then
+    return 1
+fi
+return 0
 }
 
 getDockerDigest()
