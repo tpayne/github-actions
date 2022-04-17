@@ -278,7 +278,7 @@ do
         getDockerToken "${registryServer}" "${dockerBaseImage}"
         #if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
         #    echo "-- Error: Unable to get Docker token"
-        ¢    return 1
+        #    return 1
         #fi        
         getDockerDigest "${registryServer}" "${dockerToken}" "${dockerBaseImage}" "${dockerImageTag}"
         if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
