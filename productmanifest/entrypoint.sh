@@ -12,6 +12,7 @@ manifestGitRepo=
 targetDir=
 
 dockerList=
+dockerListFile=
 
 gitUser=
 gitEmail=
@@ -78,6 +79,8 @@ while [ $# -ne 0 ] ; do
              shift 2;;
          -dl | --docker-list) dockerList=$2
              shift 2;;
+         -dlf | --docker-list-file) dockerFileList=$2
+             shift 2;;
          -gu | --git-user) gitUser=$2
              shift 2;;
          -ge | --git-email) gitEmail=$2
@@ -97,6 +100,13 @@ while [ $# -ne 0 ] ; do
     esac
 done
 
+if [ "x${dockerFileList}" != "x" ]; then
+    chkFile "${dockerFileList}"
+    if [ $? -ne 0 ]; then
+        echo "${command}: - Error: Docker list file does not exist"
+        show_usage
+    fi
+    dockerList="`cat ${dockerFileList}`"
 if [ "x${manifestFile}" = "x" ]; then
     echo "${command}: - Error: Manifest file is missing"
     show_usage   
