@@ -265,7 +265,7 @@ if [ $? -gt 0 ]; then
     return 1
 fi
 
-echo "`echo ${2}`" | sort -u | sed -n 1'p' | tr ',' '\n' | while read line; 
+echo "`echo ${2}`" | sort -u | sed -n 1'p' | tr ',' '\n' | awk '{$1=$1;print}' | while read line; 
 do
     echo "${command}: - Processing ${line}..."
     productId="`echo ${line} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
