@@ -276,10 +276,10 @@ do
     if [ "x${productId}" != "x" ]; then
         echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..." 
         getDockerToken "${registryServer}" "${dockerBaseImage}"
-        if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
-            echo "-- Error: Unable to get Docker token"
-            return 1
-        fi        
+        #if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
+        #    echo "-- Error: Unable to get Docker token"
+        ¢    return 1
+        #fi        
         getDockerDigest "${registryServer}" "${dockerToken}" "${dockerBaseImage}" "${dockerImageTag}"
         if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
             echo "-- Error: Image SHA calculation failed for ${dockerImage}"
