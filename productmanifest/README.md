@@ -4,9 +4,6 @@ This GitHub action is intended to be used with ArgoCD and Helm charts to help fa
 
 This GitHub action does require some additional work as I start to use it in anger, so watch this space.
 
-NOTE THIS DOES NOT CURRENTLY WORK - I HAVE SOME ISSUES WITH THE DIGEST THAT NEEDS RESOLVING AS REST API DOES NOT WORK
-AS SOME DOCUMENTS SAY
-
 Build Status
 ------------
 [![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml)
