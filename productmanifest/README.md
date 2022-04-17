@@ -74,3 +74,6 @@ References
 - https://docs.github.com/en/rest/reference/packages
 - https://docs.docker.com/registry/spec/api/#listing-repositories
 - https://github.community/t/ghcr-io-docker-http-api/130121
+- https://docs.docker.com/registry/spec/api/#:~:text=The%20Docker-Content-Digest%20header%20returns%20the%20canonical%20digest%20of,verify%20the%20value%20against%20the%20uploaded%20blob%20data.
+- https://www.deployhub.com/docker-image-digest-using-v2-registry-api/
+- https://docs.docker.com/engine/api/v1.41/#section/Versioning
