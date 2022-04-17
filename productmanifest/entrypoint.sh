@@ -268,11 +268,11 @@ do
     dockerBaseImage="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
     dockerImageTag="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[2]; }'`"
     dockerSha=
-    if [ "x${productId}" != "x" -a "x${dockerImageTag}" != "x" ]; then
+    if [ "x${productId}" != "x" ]; then
         echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..." 
         getDockerToken "${registryServer}" "${dockerBaseImage}"
         if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
-            echo "-- Error: Image SHA calculation failed for ${dockerImage}"
+            echo "-- Error: Unable to get Docker token"
             return 1
         fi        
         getDockerDigest "${registryServer}" "${dockerToken}" "${dockerBaseImage}" "${dockerImageTag}"
