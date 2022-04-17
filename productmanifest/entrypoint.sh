@@ -267,34 +267,36 @@ fi
 
 echo "`echo ${2}`" | sort -u | sed -n 1'p' | tr ',' '\n' | awk '{$1=$1;print}' | while read line; 
 do
-    echo "${command}: - Processing ${line}..."
-    productId="`echo ${line} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
-    dockerImage="`echo ${line} | awk '{ i = split($0,arr,":"); printf("%s:%s",arr[2],arr[3]); }'`"
-    dockerBaseImage="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
-    dockerImageTag="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[2]; }'`"
-    dockerSha=
-    if [ "x${productId}" != "x" ]; then
-        echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..." 
-        getDockerToken "${registryServer}" "${dockerBaseImage}"
-        #if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
-        #    echo "-- Error: Unable to get Docker token"
-        #    return 1
-        #fi        
-        getDockerDigest "${registryServer}" "${dockerToken}" "${dockerBaseImage}" "${dockerImageTag}"
-        if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
-            echo "-- Error: Image SHA calculation failed for ${dockerImage}"
-            return 1
-        fi    
-        imageTag=$(yq eval ".${productId}.image.tag" ${1})
-        if [ "${imageTag}" != "x" ]; then
-            echo "${command}: -- Updating tag ${productId}:${dockerSha}"
-            (yq eval --inplace ".${productId}.image.tag=\"${dockerSha}\"" ${1}) > "${tmpFile}" 2>&1
-            if [ $? -gt 0 ]; then
-                cat "${tmpFile}"
-                rmFile "${tmpFile}"
+    if [ "x${line}" != "x" ]; then
+        echo "${command}: - Processing ${line}..."
+        productId="`echo ${line} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
+        dockerImage="`echo ${line} | awk '{ i = split($0,arr,":"); printf("%s:%s",arr[2],arr[3]); }'`"
+        dockerBaseImage="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[1]; }'`"
+        dockerImageTag="`echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[2]; }'`"
+        dockerSha=
+        if [ "x${productId}" != "x" ]; then
+            echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..." 
+            getDockerToken "${registryServer}" "${dockerBaseImage}"
+            if [ $? -gt 0 -o "x${dockerToken}" = "x" ]; then
+                echo "-- Error: Unable to get Docker token"
                 return 1
+            fi        
+            getDockerDigest "${registryServer}" "${dockerToken}" "${dockerBaseImage}" "${dockerImageTag}"
+            if [ $? -gt 0 -o "x${dockerSha}" = "x" ]; then
+                echo "-- Error: Image SHA calculation failed for ${dockerImage}"
+                return 1
+            fi    
+            imageTag=$(yq eval ".${productId}.image.tag" ${1})
+            if [ "${imageTag}" != "x" ]; then
+                echo "${command}: -- Updating tag ${productId}:${dockerSha}"
+                (yq eval --inplace ".${productId}.image.tag=\"${dockerSha}\"" ${1}) > "${tmpFile}" 2>&1
+                if [ $? -gt 0 ]; then
+                    cat "${tmpFile}"
+                    rmFile "${tmpFile}"
+                    return 1
+                fi
+                rmFile "${tmpFile}"
             fi
-            rmFile "${tmpFile}"
         fi
     fi
 done
