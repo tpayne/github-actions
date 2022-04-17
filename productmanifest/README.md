@@ -59,7 +59,7 @@ The following are some samples of usage.
       manifest-file: helm/dev/values.yaml
       github-username: ${{ secrets.XGITHUB_USER }}
       github-email: ${{ secrets.XGITHUB_EMAIL }}
-      image-list: jenkinscd-framework-deployment:tpayne666/jenkinsdsl:latest
+      image-list-file: helm/imagelist.txt
       git-token: ${{ secrets.XGITHUB_PAT }}
       registry-server: docker.io
       docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
