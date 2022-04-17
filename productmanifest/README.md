@@ -65,6 +65,7 @@ The following are some samples of usage.
 
 Notes
 -----
+- Make sure you have NO spaces in the dockerlist you submit. If you do, then it will not be parsed correctly - use `chartname:image:tag,chartname:image:tag,chartname:image:tag`, NOT `chartname:image:tag, chartname:image:tag, chartname:image:tag`
 - This GitHub action has only been tested against `docker.io` using public repos. Additional support may need to be added for other repo types. This can be done best by using their REST API as `docker` is flakey 
 - Currently, this action uses Docker REST APIs rather than docker itself for the work. This is because it is generally quicker, but not so portable. If portability becomes an issue, I will make this addon work as a `dnd` system
 
