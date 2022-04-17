@@ -20,11 +20,13 @@ The following are the documented parameters for this action...
 >| `github-username` | Name of the destination username/organization | True |
 >| `github-email` | Name of the destination username/organization email | True |
 >| `image-list` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage) | False |
->| `image-list-file` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage) | False |
+>| `image-list-file` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage). This will override `image-list` | False |
 >| `git-token` | Value of the Git Token to use for the commit - usually a GITHUB PAT | True |
 >| `registry-server` | Docker registry server where images are held | True |
 >| `docker-username` | Docker username to login as | True |
 >| `docker-passwd` | Docker password to use for the login | True |
+
+You must specify either `image-list` or `image-list-file`.
 
 Example usage
 -------------
