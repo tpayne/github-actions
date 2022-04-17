@@ -107,7 +107,7 @@ if [ "x${dockerFileList}" != "x" ]; then
         show_usage
     fi
     dockerList="`cat ${dockerFileList}`"
-if [ "x${manifestFile}" = "x" ]; then
+elif [ "x${manifestFile}" = "x" ]; then
     echo "${command}: - Error: Manifest file is missing"
     show_usage   
 elif [ "x${manifestGitRepo}" = "x" ]; then
