@@ -20,6 +20,7 @@ RUN chmod -R o+rw /github/home/
 
 USER ${account}:${account}
 
-COPY entrypoint.sh ./entrypoint.sh
+ARG file=productmanifest.sh
+COPY ${file} ./${file}
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/${file}"]
