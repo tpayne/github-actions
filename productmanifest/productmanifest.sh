@@ -298,7 +298,7 @@ do
             fi    
             imageTag=$(yq eval ".${productId}.image.tag" ${1})
             if [ "${imageTag}" != "x" ]; then
-                echo "${command}: -- Updating tag ${productId}:${dockerSha}"
+                # echo "${command}: -- Updating tag ${productId}:${dockerSha}"
                 (yq eval --inplace ".${productId}.image.tag=\"${dockerSha}\"" ${1}) > "${tmpFile}" 2>&1
                 if [ $? -gt 0 ]; then
                     cat "${tmpFile}"
