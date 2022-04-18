@@ -6,7 +6,7 @@ This GitHub action does require some additional work as I start to use it in ang
 
 Build Status
 ------------
-[![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml)
+[![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml)
 
 Documented Parameters
 ---------------------
