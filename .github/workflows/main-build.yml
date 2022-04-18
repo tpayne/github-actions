@@ -8,12 +8,8 @@ name: GitHub CR Build and Push
 on:
   push:
     branches: [ main ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
-  schedule:
-    - cron: '0 0 1 * *'
 
 env:
   REGISTRY: ghcr.io
