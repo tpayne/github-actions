@@ -1,7 +1,7 @@
 # GitHub-Actions
 Repo for public GitHub actions
 
-[![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/docker-image.yml/badge.svg?branch=main)](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml)
+[![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml/badge.svg?branch=main)](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml)
 
 GitHub Actions
 --------------
