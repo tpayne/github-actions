@@ -23,4 +23,5 @@ USER ${account}:${account}
 ARG file=productmanifest.sh
 COPY ${file} ./${file}
 
-ENTRYPOINT ["/${file}"]
+# Does not substitute file in quotes...
+ENTRYPOINT ["/productmanifest.sh"]
