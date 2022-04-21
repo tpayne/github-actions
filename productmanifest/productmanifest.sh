@@ -167,6 +167,7 @@ if [ $? -gt 0 ]; then
         fi
     elif [ "${1}" = "ghcr.io" ]; then
         # This is done in the token validation as we already have a token to use
+        jwtToken=
     fi
 fi
 rmFile "${tmpFile}"
@@ -235,7 +236,7 @@ if [ "${1}" = "docker.io" ]; then
                     | jq -r '.token')
 elif [ "${1}" = "ghcr.io" ]; then
     dockerToken=$(curl --silent \
-                    -u "${3}":"${4}" https://${1}/token?scope=repository:${2}:pull"  \
+                    -u "${3}":"${4}" "https://${1}/token?scope=repository:${2}:pull"  \
                     | jq -r '.token')
 fi
 
