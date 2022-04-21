@@ -2,8 +2,6 @@ Product Manifest
 ----------------
 This GitHub action is intended to be used with ArgoCD and Helm charts to help faciliate an easier GitOps experience.
 
-This GitHub action does require some additional work as I start to use it in anger, so watch this space.
-
 Build Status
 ------------
 [![GitHub CR Build and Push](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml/badge.svg?branch=main&event=push)](https://github.com/tpayne/github-actions/actions/workflows/main-build.yml)
@@ -30,8 +28,10 @@ You must specify either `image-list` or `image-list-file`.
 
 Example usage
 -------------
-The following are some samples of usage.
-   
+The following are some samples of usage...
+
+Standard usage.
+
 ```yaml
    - name: GitOps Helm Update
      uses: tpayne/github-actions/productmanifest
@@ -49,6 +49,8 @@ The following are some samples of usage.
       docker-passwd: ${{ secrets.DOCKER_PWD }}
 ```
 
+Image list file sample.
+
 ```yaml
    - name: GitOps Helm Chart Update(s)
      uses: tpayne/github-actions/productmanifest@main
@@ -61,16 +63,37 @@ The following are some samples of usage.
       github-email: ${{ secrets.XGITHUB_EMAIL }}
       image-list-file: helm/imagelist.txt
       git-token: ${{ secrets.XGITHUB_PAT }}
-      registry-server: docker.io
+      registry-server: ghcr.io
       docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker-passwd: ${{ secrets.DOCKERHUB_PASSWORD }}
+      docker-passwd: ${{ secrets.XGITHUB_PAT }}
+```
+
+Some environment substitution sample using `ghcr.io`
+
+```yaml
+    - name: GitOps Helm Chart Update(s)
+      uses: tpayne/github-actions/productmanifest@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.XGITHUB_PAT }}
+      with:
+        gitops-repo-url: https://github.com/tpayne/codefresh-csdp-samples
+        manifest-file: helm/dev/values.yaml
+        github-username: ${{ secrets.XGITHUB_USER }}
+        github-email: ${{ secrets.XGITHUB_EMAIL }}
+        image-list: jenkinscd-framework-deployment:${{ env.REGISTRY }}/${{ github.actor }}/jenkinsdsl:master
+        git-token: ${{ secrets.XGITHUB_PAT }}
+        registry-server: ${{ env.REGISTRY }}
+        docker-username: ${{ github.actor }}
+        docker-passwd: ${{ secrets.XGITHUB_PAT }}
 ```
 
 Notes
 -----
 - Make sure you have NO spaces in the dockerlist you submit. If you do, then it will not be parsed correctly - use `chartname:image:tag,chartname:image:tag,chartname:image:tag`, NOT `chartname:image:tag, chartname:image:tag, chartname:image:tag`
-- This GitHub action has only been tested against `docker.io` using public repos. Additional support may need to be added for other repo types. This can be done best by using their REST API as `docker` is flakey 
-- Currently, this action uses Docker REST APIs rather than docker itself for the work. This is because it is generally quicker, but not so portable. If portability becomes an issue, I will make this addon work as a `dnd` system
+- This GitHub action has only been tested against `docker.io` and `ghcr.io`. Additional support may need to be added for other repo types. This can be done best by using their REST API as `docker` is flakey 
+- Currently, this action uses Docker REST APIs rather than docker itself for the work. This is because it is generally quicker, but not so portable.
+- If using `docker.io` you will need to specify your DockerHub user password as the `docker-passwd` value.
+- If using `ghcr.io` you will need to use your GitHub PAT token as the `docker-passwd` value.
 
 References
 ----------
