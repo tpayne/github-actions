@@ -165,10 +165,8 @@ if [ $? -gt 0 ]; then
             rmFile "${tmpFile}"
             return 1
         fi
-    else
-        cat "${tmpFile}"
-        rmFile "${tmpFile}"
-        return 1
+    elif [ "${1}" = "ghcr.io" ]; then
+        # This is done in the token validation as we already have a token to use
     fi
 fi
 rmFile "${tmpFile}"
@@ -231,9 +229,15 @@ return 0
 getDockerToken()
 {
 dockerToken=
-dockerToken=$(curl --silent \
-                "https://auth.${1}/token?scope=repository:${2}:pull&service=registry.${1}" \
-                | jq -r '.token')
+if [ "${1}" = "docker.io" ]; then
+    dockerToken=$(curl --silent \
+                    "https://auth.${1}/token?scope=repository:${2}:pull&service=registry.${1}" \
+                    | jq -r '.token')
+elif [ "${1}" = "ghcr.io" ]; then
+    dockerToken=$(curl --silent \
+                    -u "${3}":"${4}" https://${1}/token?scope=repository:${2}:pull"  \
+                    | jq -r '.token')
+fi
 
 if [ "x${dockerToken}" = "x" ]; then
     return 1
@@ -244,9 +248,15 @@ return 0
 getDockerDigest()
 {
 rmFile "${tmpFile}"
-(curl -v --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
-    --header "Authorization: Bearer ${2}" \
-    "https://registry-1.${1}/v2/${3}/manifests/${4}") > "${tmpFile}" 2>&1
+if [ "${1}" = "docker.io" ]; then
+    (curl -v --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+        --header "Authorization: Bearer ${2}" \
+        "https://registry-1.${1}/v2/${3}/manifests/${4}") > "${tmpFile}" 2>&1
+elif [ "${1}" = "ghcr.io" ]; then
+    (curl -v --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+        --header "Authorization: Bearer ${2}" \
+        "https://{1}/v2/${3}/manifests/${4}") > "${tmpFile}" 2>&1
+fi
 
 dockerSha=$(cat "${tmpFile}" | grep -i Docker-Content-Digest | awk '{ print $3 }')
 retStat=$?
@@ -286,7 +296,7 @@ do
         dockerSha=
         if [ "x${productId}" != "x" ]; then
             echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..." 
-            getDockerToken "${registryServer}" "${dockerBaseImage}"
+            getDockerToken "${registryServer}" "${dockerBaseImage}" "${4}" "${5}"
             if [ $? -gt 0 -o "x${dockerToken}" = "x" ]; then
                 echo "-- Error: Unable to get Docker token"
                 return 1
@@ -380,7 +390,7 @@ fi
 
 cd $CWD
 
-updateManifest "${manifestFile}" "${dockerList}" "${manifestGitRepo}"
+updateManifest "${manifestFile}" "${dockerList}" "${manifestGitRepo}" "${gitUser}" "${gitToken}"
 if [ $? -ne 0 ]; then
     cd $CWD
     echo "${command}: - Error: Updating the product manifest file failed"
@@ -402,3 +412,4 @@ cd $CWD
 
 echo "${command}: Done"
 exit 0
+
