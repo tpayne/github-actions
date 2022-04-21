@@ -126,7 +126,7 @@ elif [ "x${gitToken}" = "x" ]; then
     echo "${command}: - Error: GitHub token is missing"
     show_usage
 elif [ "x${gitComment}" = "x" ]; then
-    gitComment="Updating product manifest `date`"    
+    gitComment="Updating product manifest for ${registryServer} images on `date`"    
 fi
 
 return 0
