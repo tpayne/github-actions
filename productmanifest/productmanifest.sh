@@ -256,11 +256,16 @@ if [ "${1}" = "docker.io" ]; then
 elif [ "${1}" = "ghcr.io" ]; then
     (curl -v --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
         --header "Authorization: Bearer ${2}" \
-        "https://{1}/v2/${3}/manifests/${4}") > "${tmpFile}" 2>&1
+        "https://${1}/v2/${3}/manifests/${4}") > "${tmpFile}" 2>&1
 fi
 
 dockerSha=$(cat "${tmpFile}" | grep -i Docker-Content-Digest | awk '{ print $3 }')
 retStat=$?
+if [ $retStat -gt 0 ]; then
+    cat "${tmpFile}"
+    rmFile "${tmpFile}"
+    return 1
+fi
 rmFile "${tmpFile}"
 
 # This gives the image Id, not the digest...
