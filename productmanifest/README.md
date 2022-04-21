@@ -22,7 +22,7 @@ The following are the documented parameters for this action...
 >| `image-list` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage):(tag) | False |
 >| `image-list-file` | Image list to process. This is a CSV and takes the form of a string like (helmChartName):(dockerImage):(tag). This will override `image-list` | False |
 >| `git-token` | Value of the Git Token to use for the commit - usually a GITHUB PAT | True |
->| `registry-server` | Docker registry server where images are held | True |
+>| `registry-server` | Docker registry server where images are held. Currently, only `docker.io` and `ghcr.io` are supported | True |
 >| `docker-username` | Docker username to login as | True |
 >| `docker-passwd` | Docker password to use for the login | True |
 
