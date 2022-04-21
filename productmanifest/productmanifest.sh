@@ -32,7 +32,7 @@ push=0
 clone=0
 remove=0
 tmpFile="/tmp/tmpFile$$.tmp"
-
+ 
 rmFile()
 {
 if [ -f "$1" ]; then
