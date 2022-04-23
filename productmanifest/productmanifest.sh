@@ -90,6 +90,8 @@ while [ $# -ne 0 ] ; do
              shift 2;;
          -m | --message) gitComment=$2
              shift 2;;
+         -tgs | --tag-string) tagStr=$2
+             shift 2;;
          -d | --delete) remove=1 ; shift;;
          --debug) set -xv ; shift;;
          -p | --push) push=1 ; shift;;
@@ -128,6 +130,8 @@ elif [ "x${gitToken}" = "x" ]; then
     show_usage
 elif [ "x${gitComment}" = "x" ]; then
     gitComment="Updating product manifest for ${registryServer} images on `date`"    
+elif [ "x${tagStr}" = "x" ]; then
+    tagStr=".image.tag"    
 fi
 
 return 0
