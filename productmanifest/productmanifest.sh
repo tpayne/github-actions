@@ -8,6 +8,7 @@ CWD=`pwd`
 
 manifestFile=
 manifestGitRepo=
+tagStr=".image.tag"
 
 targetDir=
 
@@ -312,10 +313,10 @@ do
                 echo "-- Error: Image SHA calculation failed for ${dockerImage}"
                 return 1
             fi    
-            imageTag=$(yq eval ".${productId}.image.tag" ${1})
+            imageTag=$(yq eval ".${productId}${tagStr}" ${1})
             if [ "${imageTag}" != "x" ]; then
                 # echo "${command}: -- Updating tag ${productId}:${dockerSha}"
-                (yq eval --inplace ".${productId}.image.tag=\"${dockerSha}\"" ${1}) > "${tmpFile}" 2>&1
+                (yq eval --inplace ".${productId}${tagStr}=\"${dockerSha}\"" ${1}) > "${tmpFile}" 2>&1
                 if [ $? -gt 0 ]; then
                     cat "${tmpFile}"
                     rmFile "${tmpFile}"
