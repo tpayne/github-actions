@@ -22,7 +22,7 @@ The following are the documented parameters for this action...
 >| `git-token` | Value of the Git Token to use for the commit - usually a GITHUB PAT | True |
 >| `registry-server` | Docker registry server where images are held. Currently, only `docker.io` and `ghcr.io` are supported | True |
 >| `docker-username` | Docker username to login as | True |
->| `docker-passwd` | Docker password to use for the login | True |
+>| `docker-password` | Docker password to use for the login | True |
 
 You must specify either `image-list` or `image-list-file`.
 
@@ -46,7 +46,7 @@ Standard usage.
       git-token: ${{ secrets.API_TOKEN_GITHUB }}
       registry-server: docker.io
       docker-username: ${{ secrets.DOCKER_USER }}
-      docker-passwd: ${{ secrets.DOCKER_PWD }}
+      docker-password: ${{ secrets.DOCKER_PWD }}
 ```
 
 Image list file sample.
@@ -65,7 +65,7 @@ Image list file sample.
       git-token: ${{ secrets.XGITHUB_PAT }}
       registry-server: ghcr.io
       docker-username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker-passwd: ${{ secrets.XGITHUB_PAT }}
+      docker-password: ${{ secrets.XGITHUB_PAT }}
 ```
 
 Some environment substitution sample using `ghcr.io`
@@ -84,7 +84,7 @@ Some environment substitution sample using `ghcr.io`
         git-token: ${{ secrets.XGITHUB_PAT }}
         registry-server: ${{ env.REGISTRY }}
         docker-username: ${{ github.actor }}
-        docker-passwd: ${{ secrets.XGITHUB_PAT }}
+        docker-password: ${{ secrets.XGITHUB_PAT }}
 ```
 
 Notes
