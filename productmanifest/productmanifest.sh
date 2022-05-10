@@ -159,8 +159,6 @@ usage() {
   elif [ "x${gitEmail}" = "x" ]; then
     echo "${command}: - Error: GitHub email is missing"
     show_usage
-  elif [ "x${dockerITag}" = "xnull" ]; then
-    dockerITag=
   elif [ "x${gitToken}" = "x" ]; then
     echo "${command}: - Error: GitHub token is missing"
     show_usage
@@ -168,6 +166,11 @@ usage() {
     gitComment="Updating product manifest for ${registryServer} images on $(date)"
   elif [ "x${tagStr}" = "x" ]; then
     tagStr=".image.tag"
+  fi
+
+  ## This seems to have some odd limit issue...
+  if [ "x${dockerITag}" = "xnull" ]; then
+    dockerITag=
   fi
 
   return 0
@@ -301,7 +304,9 @@ getDockerDigest() {
       "https://${1}/v2/${3}/manifests/${4}") >"${tmpFile}" 2>&1
   fi
 
-  dockerSha=$(cat "${tmpFile}" | grep -i Docker-Content-Digest | awk '{ print $3 }')
+  dockerSha=$(cat "${tmpFile}" | grep -i Docker-Content-Digest | awk '{ print $3 }' | tr '\r' ' ' | \
+    awk '{$1=$1;print}')
+
   retStat=$?
   if [ $retStat -gt 0 ]; then
     cat "${tmpFile}"
