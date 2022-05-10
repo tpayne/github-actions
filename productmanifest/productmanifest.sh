@@ -334,7 +334,7 @@ updateManifest() {
       dockerSha=
       if [ "x${productId}" != "x" ]; then
         echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..."
-        if [ "x${dockerITag}" != "x" ]; then
+        if [ "x${dockerITag}" = "x" ]; then
           getDockerToken "${registryServer}" "${dockerBaseImage}" "${4}" "${5}"
           if [ $? -gt 0 -o "x${dockerToken}" = "x" ]; then
             echo "-- Error: Unable to get Docker token"
