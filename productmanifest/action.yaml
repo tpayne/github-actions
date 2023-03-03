@@ -39,7 +39,7 @@ inputs:
       The file must exist in the GitOps repo and be accessible via a relative pathname 
     required: false
     default: 'null'    
-  git-token:
+  github-token:
     description: Value of the Git Token to use for the commit - usually a GITHUB PAT 
     required: true
   registry-server:
@@ -71,7 +71,7 @@ runs:
     - --clone
     - --push
     - --git-token 
-    - '${{ inputs.git-token }}'
+    - '${{ inputs.github-token }}'
     - -mgr 
     - '${{ inputs.gitops-repo-url }}'
     - -mf 
