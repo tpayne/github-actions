@@ -62,7 +62,7 @@ inputs:
   tag-string:
     description: '[Optional] Tag string to use'
     required: false
-    default: '.image.tag'
+    default: '.containerImage.tag'
     
 runs:
   using: docker
