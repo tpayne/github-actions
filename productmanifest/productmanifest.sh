@@ -245,8 +245,13 @@ cloneRepo() {
   fi
   rmFile "${tmpFile}"
 
-  getGitDir
-
+  getGitDir "${1}"
+  if [ ! -d "/tmp/${gitFolder}" ]; then
+    echo "${command}: -- Folder not found \"${gitFolder}\"..."
+    return 1
+  fi
+  
+  gitFolder=
   return 0
 }
 
@@ -319,10 +324,15 @@ getDockerDigest() {
 }
 
 updateManifest() {
-  echo "${command}: Updating product manifests..."
+  echo "${command}: Updating product manifests for ${3}..."
   getGitDir "${3}"
 
-  cd /tmp/${gitFolder}
+  if [ ! -d "/tmp/${gitFolder}" ]; then
+    echo "${command}: Unable to locate folder \"/tmp/${gitFolder}\""
+    return 1
+  fi
+  
+  cd "/tmp/${gitFolder}"
   chkFile "$1"
   if [ $? -gt 0 ]; then
     echo "${command}: Unable to locate manifest file \"${1}\" in folder \"/tmp/${gitFolder}\""
