@@ -325,7 +325,7 @@ updateManifest() {
   cd /tmp/${gitFolder}
   chkFile "$1"
   if [ $? -gt 0 ]; then
-    echo "${command}: Unable to locate manifest file ${1}"
+    echo "${command}: Unable to locate manifest file \"${1}\" in folder \"/tmp/${gitFolder}\""
     return 1
   fi
 
