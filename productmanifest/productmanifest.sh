@@ -228,6 +228,8 @@ cloneRepo() {
   rmFile "${tmpFile}"
   cd /tmp
 
+  url=$(printf ${1} | sed "s/https:\/\//https:\/\/token:${3}@/g")
+
   getGitDir "${1}"
 
   if [ $remove -gt 0 ]; then
@@ -237,7 +239,7 @@ cloneRepo() {
     fi
   fi
 
-  (git clone ${1}) >"${tmpFile}" 2>&1
+  (git clone ${url}) >"${tmpFile}" 2>&1
   if [ $? -gt 0 ]; then
     cat "${tmpFile}"
     rmFile "${tmpFile}"
@@ -437,7 +439,7 @@ if [ "x${userName}" != "x" -a "x${password}" != "x" ]; then
 fi
 
 if [ $clone -gt 0 ]; then
-  cloneRepo "${manifestGitRepo}"
+  cloneRepo "${manifestGitRepo}" "${gitUser}" "${gitToken}"
   if [ $? -ne 0 ]; then
     cd $CWD
     echo "${command}: - Error: Cloning repo failed"
