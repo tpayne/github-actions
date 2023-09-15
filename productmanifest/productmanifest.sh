@@ -350,7 +350,7 @@ updateManifest() {
       dockerImageTag="$(echo ${dockerImage} | awk '{ i = split($0,arr,":"); printf arr[2]; }')"
       dockerSha=
       if [ "x${productId}" != "x" ]; then
-        echo "${command}: -- Updating ${productId} -> ${dockerBaseImage}..."
+        echo "${command}: -- Updating ${productId}..."
         if [ "x${dockerITag}" = "x" ]; then
           getDockerToken "${registryServer}" "${dockerBaseImage}" "${4}" "${5}"
           if [ $? -gt 0 -o "x${dockerToken}" = "x" ]; then
