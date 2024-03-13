@@ -130,7 +130,7 @@ usage() {
     echo "${command}: - Error: GitHub token is missing"
     show_usage
   elif [ "x${gitComment}" = "x" ]; then
-    gitComment="Updating product manifest for ${registryServer} images on $(date)"
+    gitComment="Updating SBOM manifest on $(date)"
   fi
 
   return 0
@@ -216,7 +216,7 @@ commitManifest() {
   getGitDir "${1}"
 
   cd /tmp/${gitFolder}
-  echo "${command}: Committing product manifests..."
+  echo "${command}: Committing SBOM manifests..."
 
   url=$(printf ${1} | sed "s/https:\/\//https:\/\/token:${4}@/g")
   (git remote set-url origin ${url}) >"${tmpFile}" 2>&1
@@ -273,7 +273,7 @@ updateManifest "${manifestFile}" "${manifestGitRepo}" "${component}" \
       "${version}" "${gitUser}" "${gitToken}"
 if [ $? -ne 0 ]; then
   cd $CWD
-  echo "${command}: - Error: Updating the product manifest file failed"
+  echo "${command}: - Error: Updating the SBOM manifest file failed"
   exit 1
 fi
 
@@ -284,7 +284,7 @@ if [ $push -gt 0 ]; then
       "${gitToken}" "${gitComment}"
   if [ $? -ne 0 ]; then
     cd $CWD
-    echo "${command}: - Error: Committing the product manifest file failed"
+    echo "${command}: - Error: Committing the SBOM manifest file failed"
     exit 1
   fi
 fi
