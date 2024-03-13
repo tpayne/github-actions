@@ -1,4 +1,4 @@
-name: Update/Commit GitOps Helm value charts 
+name: Update GitOps SBOM version manifest files 
 description: >-
   This GitHub Actions workflow is intended to allow you to update the version
   of a component in a controlled SBOM file
