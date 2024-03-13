@@ -34,7 +34,8 @@ Standard usage.
       API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
      with:
       gitops-repo-url: https://github.com/tpayne/kubernetes-examples
-      manifest-file: YAML/Argocd/helm/dev/values.yaml
+      src-sbom-file: dev/values.yaml
+      target-sbom-file: qa/values.yaml
       github-username: ${{ secrets.GIT_USER }}
       github-email: ${{ secrets.GIT_EMAIL }}
       git-token: ${{ secrets.API_TOKEN_GITHUB }}

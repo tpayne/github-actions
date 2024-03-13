@@ -5,6 +5,8 @@ trap 'stty echo; echo "${command} aborted"; exit' 1 2 3 15
 CWD=$(pwd)
 
 manifestFile=
+dstManifestFile=
+
 manifestGitRepo=
 
 component=
@@ -48,8 +50,12 @@ usage() {
     # GitHub actions double quote where we do not want them...
     word="$(echo "$1" | sed -e 's/^"//' -e 's/"$//')"
     case $word in
-    -mf | --manifest-file)
+    -mf | --src-manifest-file)
       manifestFile=$2
+      shift 2
+      ;;
+    -dmf | --target-manifest-file)
+      dstManifestFile=$2
       shift 2
       ;;
     -mgr | --manifest-git-repo)
@@ -109,7 +115,10 @@ usage() {
   done
 
   if [ "x${manifestFile}" = "x" ]; then
-    echo "${command}: - Error: Manifest file is missing"
+    echo "${command}: - Error: Source manifest file is missing"
+    show_usage
+  elif [ "x${dstManifestFile}" = "x" ]; then
+    echo "${command}: - Error: Target manifest file is missing"
     show_usage
   elif [ "x${manifestGitRepo}" = "x" ]; then
     echo "${command}: - Error: GitOps repo is missing"
@@ -138,12 +147,14 @@ usage() {
 
 show_usage() {
   echo "${command}: Usage..."
-  echo "${command}: -mf <manifestFile>"
+  echo "${command}: -mf <srcManifestFile>"
+  echo "${command}: -dmf <targetManifestFile>"
   echo "${command}: -mgr <manifestGitRepoURL>"
   echo "${command}: -gu <gitUser>"
   echo "${command}: -ge <gitEmail>"
   echo "${command}: -gt <gitToken>"
-  echo "${command}: -tgs <tagString>"
+  echo "${command}: -c <component>"
+  echo "${command}: -v <version>"
   echo "${command}: -m <commitMessage>"
   echo "${command}: --debug"
   echo "${command}: --clone"
@@ -188,8 +199,8 @@ cloneRepo() {
 }
 
 updateManifest() {
-  echo "${command}: Updating component manifests for ${3}..."
-  getGitDir "${2}"
+  echo "${command}: Updating component manifests for ${4}..."
+  getGitDir "${3}"
 
   if [ ! -d "/tmp/${gitFolder}" ]; then
     echo "${command}: Unable to locate folder \"/tmp/${gitFolder}\""
@@ -203,7 +214,7 @@ updateManifest() {
     return 1
   fi
 
-  /opt/tools/updateCompVers.py "${1}" "${1}" "${3}" "${4}" 
+  /opt/tools/updateCompVers.py "${1}" "${2}" "${4}" "${5}" 
   if [ $? -gt 0 ]; then
     echo "${command}: Unable to update manifest file \"${1}\" in folder \"/tmp/${gitFolder}\""
     return 1
@@ -239,7 +250,8 @@ commitManifest() {
   export GIT_COMMITTER_NAME="${2}"
   export GIT_COMMITTER_EMAIL="${3}"
 
-  (git commit --author="${2}" -am "${5}") >"${tmpFile}" 2>&1
+  (git add "${6}") >"${tmpFile}" 2>&1
+  (git commit --author="${2}" -am "${5}") >>"${tmpFile}" 2>&1
   if [ $? -gt 0 ]; then
     cat "${tmpFile}"
     rmFile "${tmpFile}"
@@ -269,8 +281,8 @@ fi
 
 cd $CWD
 
-updateManifest "${manifestFile}" "${manifestGitRepo}" "${component}" \
-      "${version}" "${gitUser}" "${gitToken}"
+updateManifest "${manifestFile}" "${dstManifestFile}" \
+      "${manifestGitRepo}" "${component}" "${version}"
 if [ $? -ne 0 ]; then
   cd $CWD
   echo "${command}: - Error: Updating the SBOM manifest file failed"
@@ -281,7 +293,7 @@ cd $CWD
 
 if [ $push -gt 0 ]; then
   commitManifest "${manifestGitRepo}" "${gitUser}" "${gitEmail}" \
-      "${gitToken}" "${gitComment}"
+      "${gitToken}" "${gitComment}" "${dstManifestFile}"
   if [ $? -ne 0 ]; then
     cd $CWD
     echo "${command}: - Error: Committing the SBOM manifest file failed"

@@ -6,7 +6,10 @@ inputs:
   gitops-repo-url:
     description: The URL of the GitOps repo to clone and update
     required: true
-  sbom-file:
+  src-sbom-file:
+    description: The relative location of the SBOM file to read
+    required: true
+  target-sbom-file:
     description: The relative location of the SBOM file to update
     required: true
   component:
@@ -39,7 +42,9 @@ runs:
     - -mgr 
     - '${{ inputs.gitops-repo-url }}'
     - -mf 
-    - '${{ inputs.manifest-file }}'
+    - '${{ inputs.src-sbom-file }}'
+    - -dmf 
+    - '${{ inputs.target-sbom-file }}'
     - -gu 
     - '${{ inputs.github-username }}'
     - -ge 
