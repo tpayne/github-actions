@@ -41,10 +41,10 @@ if inTemplate.is_file():
     else:
       print('Error: Specified task "' + taskStr + 
             '" was not found in template "'+ inputFile + '"')
-      exit(-1)
+      exit(1)
 else:
   print('Error: Specified file "' + inputFile + '" does not exist')
-  exit(-1)
+  exit(1)
       
 exit(0)
 
