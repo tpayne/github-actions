@@ -28,7 +28,7 @@ The following are some samples of usage...
 Standard usage.
 
 ```yaml
-   - name: GitOps Helm Update
+   - name: GitOps SBOM Update
      uses: tpayne/github-actions/sbom-manifest
      env:
       API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
