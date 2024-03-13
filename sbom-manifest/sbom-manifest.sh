@@ -189,7 +189,7 @@ cloneRepo() {
 
 updateManifest() {
   echo "${command}: Updating component manifests for ${3}..."
-  getGitDir "${3}"
+  getGitDir "${2}"
 
   if [ ! -d "/tmp/${gitFolder}" ]; then
     echo "${command}: Unable to locate folder \"/tmp/${gitFolder}\""
@@ -203,8 +203,7 @@ updateManifest() {
     return 1
   fi
 
-
-  ./updateCompVers.py "${1}" "${1}" "${2}" "${3}" 
+  /opt/tools/updateCompVers.py "${1}" "${1}" "${3}" "${4}" 
   if [ $? -gt 0 ]; then
     echo "${command}: Unable to update manifest file \"${1}\" in folder \"/tmp/${gitFolder}\""
     return 1
@@ -270,7 +269,8 @@ fi
 
 cd $CWD
 
-updateManifest "${manifestFile}" "${component}" "${version}"
+updateManifest "${manifestFile}" "${manifestGitRepo}" "${component}" \
+      "${version}" "${gitUser}" "${gitToken}"
 if [ $? -ne 0 ]; then
   cd $CWD
   echo "${command}: - Error: Updating the product manifest file failed"
@@ -280,7 +280,8 @@ fi
 cd $CWD
 
 if [ $push -gt 0 ]; then
-  commitManifest "${manifestGitRepo}" "${gitUser}" "${gitEmail}" "${gitToken}" "${gitComment}"
+  commitManifest "${manifestGitRepo}" "${gitUser}" "${gitEmail}" \
+      "${gitToken}" "${gitComment}"
   if [ $? -ne 0 ]; then
     cd $CWD
     echo "${command}: - Error: Committing the product manifest file failed"

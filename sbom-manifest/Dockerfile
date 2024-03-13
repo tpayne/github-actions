@@ -5,15 +5,22 @@ RUN apk -U upgrade
 
 RUN apk add --no-cache git docker curl
 
+RUN pip install PyYAML
 ARG account=git
 RUN addgroup -S ${account} \
     && adduser -S ${account} -G ${account}
 
-USER ${account}:${account}
 
 # Copy local files...
-COPY sbom-manifest.sh ./sbom-manifest.sh
-COPY updateCompVers.py ./updateCompVers.py
+RUN mkdir -p /opt/tools/
+RUN chmod a+rx /opt/tools/
+
+COPY sbom-manifest.sh /opt/tools/sbom-manifest.sh
+COPY updateCompVers.py /opt/tools/updateCompVers.py
+
+USER ${account}:${account}
 
 # Does not substitute file in quotes...
-CMD ["/sbom-manifest.sh"]
+CMD ["/opt/tools/sbom-manifest.sh"]
+
+
