@@ -4,6 +4,8 @@ command=$(basename $0)
 trap 'stty echo; echo "${command} aborted"; exit' 1 2 3 15
 CWD=$(pwd)
 
+updateScript="./updateCompVers.py"
+
 manifestFile=
 dstManifestFile=
 
@@ -214,7 +216,7 @@ updateManifest() {
     return 1
   fi
 
-  /opt/tools/updateCompVers.py "${1}" "${2}" "${4}" "${5}" 
+  ${updateScript} "${1}" "${2}" "${4}" "${5}" 
   if [ $? -gt 0 ]; then
     echo "${command}: Unable to update manifest file \"${2}\" in folder \"/tmp/${gitFolder}\""
     return 1

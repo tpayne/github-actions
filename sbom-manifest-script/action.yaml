@@ -56,7 +56,6 @@ runs:
       shell: sh
       run: |
         ls -lR
-        cd sbom-manifest-script
         ./sbom-manifest.sh \
             --clone --push \
             --git-token '${{ inputs.github-token }}' \
@@ -68,4 +67,4 @@ runs:
             -c '${{ inputs.component }}' \
             -v '${{ inputs.version }}' \
             '${{ inputs.debug }}'
-      working-directory: tools
+      working-directory: tools/sbom-manifest-script
