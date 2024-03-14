@@ -96,7 +96,7 @@ usage() {
       push=1
       shift
       ;;
-    -c | --clone)
+    --clone)
       clone=1
       shift
       ;;
