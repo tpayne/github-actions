@@ -17,10 +17,11 @@ RUN chmod a+rx /opt/tools/
 
 COPY sbom-manifest.sh /opt/tools/sbom-manifest.sh
 COPY updateCompVers.py /opt/tools/updateCompVers.py
+#RUN ln -s /opt/tools/sbom-manifest.sh /sbom-manifest.sh
 
 USER ${account}:${account}
 
 # Does not substitute file in quotes...
-CMD ["/opt/tools/sbom-manifest.sh"]
+ENTRYPOINT ["/opt/tools/sbom-manifest.sh"]
 
 
