@@ -55,6 +55,8 @@ runs:
     - name: Update manifest file
       shell: sh
       run: |
+        ls -lR
+        cd sbom-manifest-script
         ./sbom-manifest.sh \
             --clone --push \
             --git-token '${{ inputs.github-token }}' \
