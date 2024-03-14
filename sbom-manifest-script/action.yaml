@@ -42,7 +42,15 @@ runs:
       shell: bash
       run: |
         echo "::error title=⛔ error hint::Support Linux Only"
-        exit 1  
+        exit 1
+    - uses: actions/checkout@v4
+      with:
+        repository: tpayne/github-actions
+        token: ${{ secrets.GH_PAT }}
+        path: tools
+        sparse-checkout: |
+          sbom-manifest-script
+
     - name: Update manifest file
       shell: sh
       run: |
@@ -57,3 +65,4 @@ runs:
             -c '${{ inputs.component }}' \
             -v '${{ inputs.version }}' \
             '${{ inputs.debug }}'
+      working-directory: tools
