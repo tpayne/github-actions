@@ -7,7 +7,7 @@ import sys
 
 if len(sys.argv) < 5:
     print('Usage: <inputYaml> <outputYaml> <componentTask> <newVersion>')
-    exit(-1)
+    exit(1)
     
 inputFile = sys.argv[1]
 outputFile = sys.argv[2]
