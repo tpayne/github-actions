@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePath
 import yaml
 import sys
 
@@ -33,6 +33,11 @@ if inTemplate.is_file():
     x = EnvTemp(**dataMap)
     if taskStr in x.tasks:
       x.tasks[taskStr][attrStr] = versionStr
+      outFile = Path(outputFile)
+      if len(outFile.parents) > 1:
+        p = Path(outFile.parent.as_posix()+'/')
+        if not p.exists():
+          p.mkdir(parents=True, exist_ok=True)
       with open(outputFile, "w") as t:
         yaml.emitter.Emitter.prepare_tag = lambda self, tag: ''
         print('--> Updating "'+taskStr+'" to version "'+

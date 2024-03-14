@@ -216,7 +216,7 @@ updateManifest() {
 
   /opt/tools/updateCompVers.py "${1}" "${2}" "${4}" "${5}" 
   if [ $? -gt 0 ]; then
-    echo "${command}: Unable to update manifest file \"${1}\" in folder \"/tmp/${gitFolder}\""
+    echo "${command}: Unable to update manifest file \"${2}\" in folder \"/tmp/${gitFolder}\""
     return 1
   fi
 
