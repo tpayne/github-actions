@@ -43,14 +43,15 @@ runs:
       run: |
         echo "::error title=⛔ error hint::Support Linux Only"
         exit 1
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
     - uses: actions/checkout@v4
       with:
         repository: tpayne/github-actions
-        token: ${{ secrets.GH_PAT }}
         path: tools
         sparse-checkout: |
           sbom-manifest-script
-
     - name: Update manifest file
       shell: sh
       run: |
