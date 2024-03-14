@@ -4,7 +4,7 @@ command=$(basename $0)
 trap 'stty echo; echo "${command} aborted"; exit' 1 2 3 15
 CWD=$(pwd)
 
-updateScript="./updateCompVers.py"
+updateScript="./${CWD}/updateCompVers.py"
 
 manifestFile=
 dstManifestFile=
