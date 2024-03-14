@@ -32,7 +32,7 @@ if inTemplate.is_file():
     dataMap = yaml.safe_load(f)
     x = EnvTemp(**dataMap)
     if taskStr in x.tasks:
-      x.tasks[taskStr][attrStr] = versionStr
+      x.tasks[taskStr][attrStr] = str(versionStr)
       outFile = Path(outputFile)
       if len(outFile.parents) > 1:
         p = Path(outFile.parent.as_posix()+'/')
