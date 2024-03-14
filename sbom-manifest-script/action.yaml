@@ -52,10 +52,12 @@ runs:
         path: tools
         sparse-checkout: |
           sbom-manifest-script
+    - run: pip install -r requirements.txt
+      shell: sh
+      working-directory: tools/sbom-manifest-script
     - name: Update manifest file
       shell: sh
       run: |
-        ls -lR
         ./sbom-manifest.sh \
             --clone --push \
             --git-token '${{ inputs.github-token }}' \
