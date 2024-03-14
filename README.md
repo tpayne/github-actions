@@ -10,6 +10,7 @@ The following are custom GitHub actions...
 >| Action | Description |
 >| -------- | ----------- |
 >| [productmanifest/](https://github.com/tpayne/github-actions/tree/main/productmanifest) | This GitHub action is intended to be used with Helm based GitOps repos to update manifest files with rebuilt Docker image repo digests. This will trigger builds in monitored GitOps repos |
+>| [sbom-manifest/](https://github.com/tpayne/github-actions/tree/main/sbom-manifest) | This GitHub action is intended to be used with SBOM based GitOps repos to update manifest files with new component versions. This will trigger builds in monitored GitOps repos |
 
 Notes
 -----
