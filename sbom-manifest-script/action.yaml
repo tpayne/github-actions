@@ -1,0 +1,59 @@
+name: Update GitOps SBOM version manifest files 
+description: >-
+  This GitHub Actions workflow is intended to allow you to update the version
+  of a component in a controlled SBOM file
+branding:
+  icon: git-commit
+  color: green
+inputs:
+  gitops-repo-url:
+    description: The URL of the GitOps repo to clone and update
+    required: true
+  src-sbom-file:
+    description: The relative location of the SBOM file to read
+    required: true
+  target-sbom-file:
+    description: The relative location of the SBOM file to update
+    required: true
+  component:
+    description: The name of the component in the SBOM file to update
+    required: true
+  version:
+    description: The new version of the component to record
+    required: true
+  github-username:
+    description: Name of the destination username/organization
+    required: true
+  github-email:
+    description: Name of the destination username/organization email
+    required: true
+  github-token:
+    description: Value of the Git Token to use for the commit - usually a GITHUB PAT 
+    required: true
+  debug:
+    description: '[Optional] Debug action'
+    required: false
+    
+runs:
+  using: 'composite'
+  steps:
+    - name: Check Runner OS
+      if: ${{ runner.os != 'Linux' }}
+      shell: bash
+      run: |
+        echo "::error title=⛔ error hint::Support Linux Only"
+        exit 1  
+    - name: Update manifest file
+      shell: sh
+      run: |
+        ./sbom-manifest.sh \
+            --clone --push \
+            --git-token '${{ inputs.github-token }}' \
+            -mgr '${{ inputs.gitops-repo-url }}' \
+            -mf '${{ inputs.src-sbom-file }}' \
+            -dmf '${{ inputs.target-sbom-file }}' \
+            -gu '${{ inputs.github-username }}' \
+            -ge '${{ inputs.github-email }}' \
+            -c '${{ inputs.component }}' \
+            -v '${{ inputs.version }}' \
+            '${{ inputs.debug }}'
