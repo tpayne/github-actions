@@ -12,8 +12,8 @@ if len(sys.argv) < 5:
 inputFile = sys.argv[1]
 outputFile = sys.argv[2]
 taskStr = sys.argv[3]
-versionStr = str(sys.argv[4])
-attrStr = "version"
+VERSIONSTR = str(sys.argv[4])
+ATTRSTR = "version"
 
 @dataclass
 class EnvTemp:
@@ -32,7 +32,7 @@ if inTemplate.is_file():
     dataMap = yaml.safe_load(f)
     x = EnvTemp(**dataMap)
     if taskStr in x.tasks:
-      x.tasks[taskStr][attrStr] = str(versionStr)
+      x.tasks[taskStr][ATTRSTR] = str(VERSIONSTR)
       outFile = Path(outputFile)
       if len(outFile.parents) > 1:
         p = Path(outFile.parent.as_posix()+'/')
@@ -41,7 +41,7 @@ if inTemplate.is_file():
       with open(outputFile, "w") as t:
         yaml.emitter.Emitter.prepare_tag = lambda self, tag: ''
         print('--> Updating "'+taskStr+'" to version "'+
-              versionStr+'" in "'+outputFile+'"...')
+              VERSIONSTR+'" in "'+outputFile+'"...')
         yaml.dump(x,t,sort_keys=False,Dumper=IndentDumper)
     else:
       print('Error: Specified task "' + taskStr + 
@@ -52,5 +52,3 @@ else:
   sys.exit(1)
       
 sys.exit(0)
-
-
