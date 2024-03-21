@@ -2,7 +2,7 @@
 
 import sys
 from dataclasses import dataclass
-from pathlib import Path, PurePath
+from pathlib import Path
 import yaml
 
 if len(sys.argv) < 5:
