@@ -1,0 +1,6 @@
+# Show files in a sha commit
+git show --pretty='' --name-only <sha>
+# Get a commit sha with file in it
+git log origin/<branch> --grep "<fileName>" --pretty=format:"%h"
+git log --pretty="%H" -n 1 -- <fileName>
+
