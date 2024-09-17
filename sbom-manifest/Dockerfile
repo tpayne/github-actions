@@ -1,4 +1,4 @@
-FROM python:3.13.0a4-alpine3.19
+FROM python:3.13.0rc2-alpine3.19
 
 RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main git
 RUN apk -U upgrade
