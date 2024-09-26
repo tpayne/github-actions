@@ -44,7 +44,7 @@ jobs:
       - name: Get token
         id: getToken
         run: |
-          token="$(npx obtain-github-app-installation-access-token ci ${{ secrets.GH_APP_ID}})"
+          token="$(npx obtain-github-app-installation-access-token ci ${{ secrets.GH_APP_ID }})"
           echo "::add-mask::${token}"
           echo "tokenId=$token" >> "$GITHUB_OUTPUT"
       - name: Say hello
