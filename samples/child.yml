@@ -1,0 +1,29 @@
+name: Child action test
+
+on:
+  workflow_call:
+    inputs:
+      commitSha:
+        required: true
+        type: string
+      optionTest:
+        required: true
+        type: string
+    outputs:
+      childOut:
+        value: ${{ jobs.test.outputs.testOut }}
+
+jobs:
+  test:
+    outputs:
+      testOut: ${{ steps.calcTest.outputs.calcedValue }}
+    runs-on: ubuntu-latest
+    name: Calc outputs
+    steps:
+      - name: Calc value
+        id: calcedValue
+        run: |
+          tempFiles="$(ls | jq -cRs 'split("\n")')"
+          tempJson="$(jq -cn --argjson templatefiles "$tempFiles" '{files: $templatefiles}')"
+          echo "calcedValue=${tempJson}" >> "${GITHUB_OUTPUT}"
+

@@ -1,0 +1,17 @@
+name: Child action print
+
+on:
+  workflow_call:
+    inputs:
+      fileName:
+        required: true
+        type: string
+
+jobs:
+  testPrint:
+    runs-on: ubuntu-latest
+    name: Print value
+    steps:
+      - name: Print value
+        run: |
+          echo "${{ inputs.fileName }}"

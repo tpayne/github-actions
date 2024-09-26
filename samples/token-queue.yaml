@@ -1,0 +1,76 @@
+name: Queue and token sample
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '**.sh'
+      - '**.Dockerfile'
+      - 'test/.*.sh'
+
+  workflow_dispatch:
+    inputs:
+      testdis-in:
+        type: boolean
+        default: true
+    outputs:
+      testdis-out:
+        type: string
+        value: ${{ jobs.test.outputs.test }}
+  workflow_call:
+    inputs:
+      testcall-in:
+        type: boolean
+        default: true
+    outputs:
+      testcall-out:
+        type: string
+        value: ${{ jobs.test.outputs.test }}
+    secrets:
+      GH_APP_ID:
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      test: "help"
+
+    steps:
+      - name: Get token
+        id: getToken
+        run: |
+          token="$(npx obtain-github-app-installation-access-token ci ${{ secrets.GH_APP_ID}})"
+          echo "::add-mask::${token}"
+          echo "tokenId=$token" >> "$GITHUB_OUTPUT"
+      - name: Say hello
+        if: ${{ inputs.testdis-in }}
+        run: |
+          echo Say hello
+
+      - name: Say baggins
+        if: ${{ !contains(github.event.head_commit_message, 'This is a commit') }}
+        runs-on: ubuntu-latest
+        run: echo baggins
+
+  build:
+    if: ${{ !contains(github.event.head_commit_message, 'This is a commit') }}
+    needs: [test]
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/library/alpine:latest
+    steps:
+      - name: Install stuff
+        run: |
+          apk add --no-cache git \
+            curl
+      - name: Do something
+        env:
+          HELP: "yes"
+        run: |
+          cd /tmp/
+          echo ${HELP}

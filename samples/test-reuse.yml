@@ -1,0 +1,69 @@
+name: Reuse sample
+
+on:
+  workflow_dispatch:
+    inputs:
+      option_test:
+        description: "Option"
+        required: true
+        default: "noop"
+        type: choice
+        options:
+          - noop
+          - option1
+          - option2
+          - option3
+      string_test:
+        description: "String"
+        required: true
+        type: string
+
+concurrency: ${{ github.ref }}
+
+jobs:
+  useChild:
+    name: Calc child value
+    secrets: inherit
+    uses: ./samples/child.yml
+    with:
+      optionTest: ${{ inputs.options_test || "noop" }}
+      commitSha: ${{ github.sha }}
+
+  useMatrix:
+    needs: useChild
+    if: |
+      {
+        needs.useChild.outputs.childOut == '{"files":["child.yml","test-reuse.yml","token-queue.yaml",""]}'
+      }
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix: ${{ fromJson(needs.useChild.outputs.childOut) }}
+    runs-on: ubuntu-latest
+    name: Sample ${{ matrix.files }}
+    steps:
+      - name: Do something with ${{ matrix.files }}
+        if: (contains(matrix.files,'child.yml'))
+        run: |
+          echo "I have a child ${{ matrix.files }}"
+      - name: Do something with ${{ matrix.files }}
+        if: (contains(matrix.files,'reuse'))
+        run: |
+          echo "I have a reuse ${{ matrix.files }}"
+
+  useMatrixCall:
+    needs: useChild
+    if: |
+      {
+        needs.useChild.outputs.childOut == '{"files":["child.yml","test-reuse.yml","token-queue.yaml",""]}'
+      }
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix: ${{ fromJson(needs.useChild.outputs.childOut) }}
+    name: Sample ${{ matrix.files }}
+    secrets: inherit
+    uses: ./samples/child-print.yml
+    with:
+      fileName: ${{ matrix.files }}
+      
