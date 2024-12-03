@@ -62,7 +62,7 @@ jobs:
       # https://github.com/docker/build-push-action
       - name: Build and Push Product Manifest GitAction Docker image
         id: build-and-push
-        uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
+        uses: docker/build-push-action@8796455d3250bab0b8ea17630e10645c29a1249a
         with:
           context: productmanifest/
           push: ${{ github.event_name != 'pull_request' }}
@@ -71,7 +71,7 @@ jobs:
 
       - name: Build and Push SBOM Manifest GitAction Docker image
         id: build-and-push-sbom
-        uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355
+        uses: docker/build-push-action@8796455d3250bab0b8ea17630e10645c29a1249a
         with:
           context: sbom-manifest/
           push: ${{ github.event_name != 'pull_request' }}
