@@ -48,13 +48,13 @@ jobs:
       # https://github.com/docker/metadata-action
       - name: Extract Product Manifest GitAction Docker metadata
         id: meta
-        uses: docker/metadata-action@8e1d5461f02b7886d3c1a774bfbd873650445aa2
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804
         with:
           images: ${{ env.REGISTRY }}/${{ github.actor }}/github-actions/productmanifest
 
       - name: Extract SBOM Manifest GitAction Docker metadata
         id: sbom
-        uses: docker/metadata-action@8e1d5461f02b7886d3c1a774bfbd873650445aa2
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804
         with:
           images: ${{ env.REGISTRY }}/${{ github.actor }}/github-actions/sbom-manifest
   
